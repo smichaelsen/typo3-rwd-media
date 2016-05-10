@@ -20,7 +20,12 @@
         {srcAttributeName -> v:or(alternative:'src')}="{f:uri.image(src:'{image.id}',width:'{width}c',height:'{height}c',maxWidth:'{maxWidth}',maxHeight:'{maxHeight}',crop:'{image.crop -> f:format.htmlentitiesDecode()}')}"
         alt="{image.alternative -> v:or(alternative:'{image.title}')}"
         {f:if(condition:'{image.title}', then:' title="{image.title}"')}{f:if(condition:'{class}', then:' class="{class}"')}
-        <f:if condition="{image.extension} == svg"><f:else>srcset="{f:uri.image(src:'{image.id}',width:'{width -> v:math.product(b:\'2\')}c',height:'{height -> v:math.product(b:\'2\')}c',maxWidth:'{maxWidth -> v:math.product(b:\'2\')}',maxHeight:'{maxHeight -> v:math.product(b:\'2\')}',crop:'{image.crop -> f:format.htmlentitiesDecode()}')} 2x"</f:else></f:if>
+        <v:condition.string.contains haystack="{image.extension}" needle="svg"><f:else>
+            <f:if condition="{retinaSrcAttributeName}">
+                <f:then>{retinaSrcAttributeName}="{f:uri.image(src:'{image.id}',width:'{width -> v:math.product(b:\'2\')}c',height:'{height -> v:math.product(b:\'2\')}c',maxWidth:'{maxWidth -> v:math.product(b:\'2\')}',maxHeight:'{maxHeight -> v:math.product(b:\'2\')}',crop:'{image.crop -> f:format.htmlentitiesDecode()}')}"</f:then>
+                <f:else>srcset="{f:uri.image(src:'{image.id}',width:'{width -> v:math.product(b:\'2\')}c',height:'{height -> v:math.product(b:\'2\')}c',maxWidth:'{maxWidth -> v:math.product(b:\'2\')}',maxHeight:'{maxHeight -> v:math.product(b:\'2\')}',crop:'{image.crop -> f:format.htmlentitiesDecode()}')} 2x"</f:else>
+            </f:if>
+        </f:else></v:condition.string.contains>
     >
 </f:section>
 
