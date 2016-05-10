@@ -1,0 +1,27 @@
+<html data-namespace-typo3-fluid="true" xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers" xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers" xmlns:rwd="http://typo3.org/ns/Smichaelsen/RwdMedia/ViewHelpers">
+
+<rwd:imageProperties as="image">{image}</rwd:imageProperties>
+<f:if condition="{debug}">{_all -> f:debug()}</f:if>
+<f:if condition="{image}">
+    <f:if condition="{image.link}">
+        <f:then>
+            <v:link.typolink configuration="{parameter: image.link}">
+                <f:render section="image" arguments="{_all}"/>
+            </v:link.typolink>
+        </f:then>
+        <f:else>
+            <f:render section="image" arguments="{_all}"/>
+        </f:else>
+    </f:if>
+</f:if>
+
+<f:section name="image">
+    <img
+        {srcAttributeName -> v:or(alternative:'src')}="{f:uri.image(src:'{image.id}',width:'{width}c',height:'{height}c',maxWidth:'{maxWidth}',maxHeight:'{maxHeight}',crop:'{image.crop -> f:format.htmlentitiesDecode()}')}"
+        alt="{image.alternative -> v:or(alternative:'{image.title}')}"
+        {f:if(condition:'{image.title}', then:' title="{image.title}"')}{f:if(condition:'{class}', then:' class="{class}"')}
+        <f:if condition="{image.extension} == svg"><f:else>srcset="{f:uri.image(src:'{image.id}',width:'{width -> v:math.product(b:\'2\')}c',height:'{height -> v:math.product(b:\'2\')}c',maxWidth:'{maxWidth -> v:math.product(b:\'2\')}',maxHeight:'{maxHeight -> v:math.product(b:\'2\')}',crop:'{image.crop -> f:format.htmlentitiesDecode()}')} 2x"</f:else></f:if>
+    >
+</f:section>
+
+</html>

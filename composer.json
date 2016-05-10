@@ -1,4 +1,9 @@
 {
     "name": "smichaelsen/rwd-media",
-    "type": "typo3-cms-extension"
+    "type": "typo3-cms-extension",
+    "autoload": {
+        "psr-4": {
+            "Smichaelsen\\RwdMedia\\": "Classes/"
+        }
+    }
 }

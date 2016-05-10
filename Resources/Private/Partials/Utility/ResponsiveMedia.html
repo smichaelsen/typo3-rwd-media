@@ -1,0 +1,12 @@
+<html data-namespace-typo3-fluid="true" xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
+
+<f:switch expression="{media.type}">
+    <f:case value="2">
+        <f:render partial="Utility/ResponsiveImage" arguments="{image:media,maxWidth:'1144'}"/>
+    </f:case>
+    <f:case value="4">
+        <f:render partial="Utility/ResponsiveVideo" arguments="{video:media}"/>
+    </f:case>
+</f:switch>
+
+</html>
