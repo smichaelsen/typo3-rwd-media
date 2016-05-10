@@ -24,6 +24,8 @@ Then in any Fluid Template use it like this:
 
 Take a look into the ResponsiveImage partial file for documentation on the supported arguments.
 
+Spoiler: The `image` argument accepts a lot of different input types like `\TYPO3\CMS\Core\Resource\FileReference`, `\TYPO3\CMS\Extbase\Domain\Model\FileReference`, a sys_file uid or a file string like "2:/my/folder/image.png". Just give it whatever you have in your hands.
+
 
 For Video files use:
 ````
