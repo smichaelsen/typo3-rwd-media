@@ -1,6 +1,12 @@
-<html data-namespace-typo3-fluid="true" xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers" xmlns:rwd="http://typo3.org/ns/Smichaelsen/RwdMedia/ViewHelpers">
+<html data-namespace-typo3-fluid="true" xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers" xmlns:rwd="http://typo3.org/ns/Smichaelsen/RwdMedia/ViewHelpers" xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers">
 
-<div class="flex-video">
+<f:comment>
+    Input arguments:
+    * video: array with the file (reference) record
+    * videoWrapClass: class for the wrapping div (e.g. 'flex-video widescreen' when using foundation or 'embed-responsive' for bootstrap)
+</f:comment>
+
+<div class="{videoWrapClass -> v:or(alternative:'flex-video')}">
     <f:media file="{video.id -> rwd:fileStringToObject()}" alt="{video.alt}" title="{video.title}"/>
 </div>
 
