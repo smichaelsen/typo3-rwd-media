@@ -2,7 +2,7 @@
 
 <f:switch expression="{media.type}">
     <f:case value="2">
-        <f:render partial="Utility/ResponsiveImage" arguments="{image:media,class:class,width:width,height:height,maxWidth:maxWidth,maxHeight:maxHeight,srcAttributeName:srcAttributeName,retinaSrcAttributeName:retinaSrcAttributeName,ignoreLink:ignoreLink,debug:debug}"/>
+        <f:render partial="Utility/ResponsiveImage" arguments="{image:media,class:class,width:width,height:height,maxWidth:maxWidth,maxHeight:maxHeight,srcAttributeName:srcAttributeName,retinaSrcAttributeName:retinaSrcAttributeName,ignoreLink:ignoreLink,dummySrc:dummySrc,debug:debug}"/>
     </f:case>
     <f:case value="4">
         <f:render partial="Utility/ResponsiveVideo" arguments="{video:media,videoWrapClass:videoWrapClass}"/>
