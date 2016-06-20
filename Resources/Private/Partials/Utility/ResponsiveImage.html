@@ -15,20 +15,28 @@
     * maxHeight: Target maximum height (in classic pixels, don't multiply by 2 for retina, that is done internally)
     * srcAttributeName: If you want the image src url set in an alternative attrbute (e.g. for lazy loading) you can set it here
     * retinaSrcAttributeName: If you want the retina image src url set in an alternative attrbute instead of srcset (e.g. for lazy loading) you can set it here
+    * ignoreLink: Don't link the image even if image.link is set
     * debug: debug output (also including the parsed image data)
 </f:comment>
 
 <rwd:imageProperties as="image">{image}</rwd:imageProperties>
 <f:if condition="{debug}">{_all -> f:debug()}</f:if>
 <f:if condition="{image}">
-    <f:if condition="{image.link}">
+    <f:if condition="{ignoreLink}">
         <f:then>
-            <v:link.typolink configuration="{parameter: image.link}">
-                <f:render section="image" arguments="{_all}"/>
-            </v:link.typolink>
+            <f:render section="image" arguments="{_all}"/>
         </f:then>
         <f:else>
-            <f:render section="image" arguments="{_all}"/>
+            <f:if condition="{image.link}">
+                <f:then>
+                    <v:link.typolink configuration="{parameter: image.link}">
+                        <f:render section="image" arguments="{_all}"/>
+                    </v:link.typolink>
+                </f:then>
+                <f:else>
+                    <f:render section="image" arguments="{_all}"/>
+                </f:else>
+            </f:if>
         </f:else>
     </f:if>
 </f:if>
