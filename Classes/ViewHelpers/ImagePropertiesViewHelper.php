@@ -53,7 +53,15 @@ class ImagePropertiesViewHelper extends AbstractViewHelper
         if ($image instanceof CoreFileReference) {
             $file = $image->getOriginalFile();
             $fileReferenceProperties = $image->getProperties();
-            $fileProperties = ResourceUtility::getFileArray($file);
+            try {
+                $fileProperties = ResourceUtility::getFileArray($file);
+            } catch (\InvalidArgumentException $e) {
+                // file was not found so return empty
+                if ($e->getCode() === 1314516809) {
+                    return '';
+                }
+                throw $e;
+            }
             ArrayUtility::mergeRecursiveWithOverrule($fileProperties, $fileReferenceProperties, TRUE, false, false);
             $variables->add($arguments['as'], $fileProperties);
         } else {
