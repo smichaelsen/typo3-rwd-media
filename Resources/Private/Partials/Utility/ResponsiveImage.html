@@ -27,16 +27,9 @@
             <f:render section="image" arguments="{_all}"/>
         </f:then>
         <f:else>
-            <f:if condition="{image.link}">
-                <f:then>
-                    <v:link.typolink configuration="{parameter: image.link}">
-                        <f:render section="image" arguments="{_all}"/>
-                    </v:link.typolink>
-                </f:then>
-                <f:else>
-                    <f:render section="image" arguments="{_all}"/>
-                </f:else>
-            </f:if>
+            <f:link.typolink parameter="{image.link}">
+                <f:render section="image" arguments="{_all}"/>
+            </f:link.typolink>
         </f:else>
     </f:if>
 </f:if>

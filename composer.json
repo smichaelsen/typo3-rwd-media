@@ -5,5 +5,8 @@
         "psr-4": {
             "Smichaelsen\\RwdMedia\\": "Classes/"
         }
+    },
+    "require": {
+        "typo3/cms-core": "^7.6"
     }
 }
