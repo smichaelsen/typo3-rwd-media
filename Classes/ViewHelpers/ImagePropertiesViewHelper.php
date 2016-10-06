@@ -25,9 +25,6 @@ class ImagePropertiesViewHelper extends AbstractViewHelper
     public function render()
     {
         $image = $this->renderChildren();
-        if (!self::hasStringKeys($image)) {
-            $image = current($image);
-        }
         if ($this->templateVariableContainer->exists($this->arguments['as'])) {
             $this->templateVariableContainer->remove($this->arguments['as']);
         }
@@ -45,15 +42,6 @@ class ImagePropertiesViewHelper extends AbstractViewHelper
         } else {
             $this->templateVariableContainer->add($this->arguments['as'], $image);
         }
-    }
-
-    /**
-     * @param array $array
-     * @return bool
-     */
-    protected function hasStringKeys(array $array)
-    {
-        return count(array_filter(array_keys($array), 'is_string')) > 0;
     }
 
 }
