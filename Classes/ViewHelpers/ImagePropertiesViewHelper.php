@@ -7,7 +7,6 @@ use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference as ExtbaseFileReference;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface;
 
 class ImagePropertiesViewHelper extends AbstractViewHelper
 {
@@ -21,29 +20,16 @@ class ImagePropertiesViewHelper extends AbstractViewHelper
     }
 
     /**
-     * @return array
+     *
      */
     public function render()
     {
-        return static::renderStatic(
-            $this->arguments,
-            $this->buildRenderChildrenClosure(),
-            $this->renderingContext
-        );
-    }
-
-    /**
-     * @param array $arguments
-     * @param \Closure $renderChildrenClosure
-     * @param RenderingContextInterface $renderingContext
-     * @return string
-     */
-    static public function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
-    {
-        $image = $renderChildrenClosure();
-        $variables = $renderingContext->getTemplateVariableContainer();
-        if ($variables->exists($arguments['as'])) {
-            $variables->remove($arguments['as']);
+        $image = $this->renderChildren();
+        if (!self::hasStringKeys($image)) {
+            $image = current($image);
+        }
+        if ($this->templateVariableContainer->exists($this->arguments['as'])) {
+            $this->templateVariableContainer->remove($this->arguments['as']);
         }
         if ($image instanceof ExtbaseFileReference) {
             $image = $image->getOriginalResource();
@@ -53,20 +39,21 @@ class ImagePropertiesViewHelper extends AbstractViewHelper
         if ($image instanceof CoreFileReference) {
             $file = $image->getOriginalFile();
             $fileReferenceProperties = $image->getProperties();
-            try {
-                $fileProperties = ResourceUtility::getFileArray($file);
-            } catch (\InvalidArgumentException $e) {
-                // file was not found so return empty
-                if ($e->getCode() === 1314516809) {
-                    return '';
-                }
-                throw $e;
-            }
+            $fileProperties = ResourceUtility::getFileArray($file);
             ArrayUtility::mergeRecursiveWithOverrule($fileProperties, $fileReferenceProperties, TRUE, false, false);
-            $variables->add($arguments['as'], $fileProperties);
+            $this->templateVariableContainer->add($this->arguments['as'], $fileProperties);
         } else {
-            $variables->add($arguments['as'], $image);
+            $this->templateVariableContainer->add($this->arguments['as'], $image);
         }
+    }
+
+    /**
+     * @param array $array
+     * @return bool
+     */
+    protected function hasStringKeys(array $array)
+    {
+        return count(array_filter(array_keys($array), 'is_string')) > 0;
     }
 
 }
